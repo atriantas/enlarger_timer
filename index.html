@@ -4,22 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Darkroom Timer</title>
-	<!-- PWA Meta Tags -->
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#ff0000">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Darkroom Timer">
-
-<!-- Icons for various platforms -->
-<link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icon-180x180.png">
-<link rel="mask-icon" href="icon.svg" color="#f00">
-
-<!-- Web App Manifest -->
-<link rel="manifest" href="manifest.json">
     <style>
     /* ===== CSS VARIABLES - PRECISE MATCH TO ORIGINAL ===== */
     :root {
@@ -2288,14 +2272,6 @@ body.fullscreen-mode .tab-content {
 }
 </style>
 </head>
-	<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js");
-  });
-}
-</script>
-
     <body>
     <div class="container">
         <header>
@@ -3210,7 +3186,7 @@ if ("serviceWorker" in navigator) {
                 <div class="relay-item">
                     <div class="settings-group">
                         <div class="settings-item">
-                            <div class="settings-label">Relay 1 (GPIO 25)</div>
+                            <div class="settings-label">Relay 1 (GPIO 14)</div>
                             <input type="text" class="settings-input" id="relay1Name" value="Enlarger Timer" placeholder="Relay name">
                         </div>
                         <div class="settings-item">
@@ -3223,7 +3199,7 @@ if ("serviceWorker" in navigator) {
                 <div class="relay-item">
                     <div class="settings-group">
                         <div class="settings-item">
-                            <div class="settings-label">Relay 2 (GPIO 17)</div>
+                            <div class="settings-label">Relay 2 (GPIO 15)</div>
                             <input type="text" class="settings-input" id="relay2Name" value="Safelight" placeholder="Relay name">
                         </div>
                         <div class="settings-item">
@@ -3236,7 +3212,7 @@ if ("serviceWorker" in navigator) {
                 <div class="relay-item">
                     <div class="settings-group">
                         <div class="settings-item">
-                            <div class="settings-label">Relay 3 (GPIO 27)</div>
+                            <div class="settings-label">Relay 3 (GPIO 18)</div>
                             <input type="text" class="settings-input" id="relay3Name" value="Ventilation" placeholder="Relay name">
                         </div>
                         <div class="settings-item">
@@ -3249,7 +3225,7 @@ if ("serviceWorker" in navigator) {
                 <div class="relay-item">
                     <div class="settings-group">
                         <div class="settings-item">
-                            <div class="settings-label">Relay 4 (GPIO 22)</div>
+                            <div class="settings-label">Relay 4 (GPIO 23)</div>
                             <input type="text" class="settings-input" id="relay4Name" value="White Light" placeholder="Relay name">
                         </div>
                         <div class="settings-item">
@@ -7665,3 +7641,40 @@ async toggle() {
 </script>
 </body>
 </html>
+<!-- PWA INSTALL BUTTON -->
+<button id="installBtn" class="settings-btn primary" style="display:none;">
+  INSTALL APP
+</button>
+
+<script>
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    installBtn.style.display = "none";
+  }
+  deferredPrompt = null;
+});
+
+window.addEventListener("appinstalled", () => {
+  installBtn.style.display = "none";
+});
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js");
+  });
+}
+</script>
