@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Dark Background (Matches App Theme) -->
+  <rect width="512" height="512" rx="128" fill="#0a0a0a"/>
+  
+  <!-- 1. The Enlarger: Bold "L-Shape" Silhouette -->
+  <!-- Column -->
+  <path d="M256 400L256 192" stroke="#f00" stroke-width="48" stroke-linecap="round"/>
+  <!-- Head (as a bold circle for simplicity) -->
+  <circle cx="256" cy="192" r="80" fill="#1a1a1a" stroke="#f00" stroke-width="16"/>
+  <!-- Lens (as negative space) -->
+  <circle cx="256" cy="192" r="32" fill="#000"/>
+  <circle cx="256" cy="192" r="12" fill="#f00"/>
+  
+  <!-- 2. The Light Beam: Simplified Symbolic Cone -->
+  <path d="M256 256L176 400L336 400L256 256Z" fill="#f00" fill-opacity="0.2"/>
+  
+  <!-- 3. The Baseboard & Print -->
+  <rect x="160" y="400" width="192" height="32" rx="8" fill="#1a1a1a"/>
+  <!-- Paper/Print (High-Contrast Shape) -->
+  <rect x="208" y="352" width="96" height="64" rx="6" fill="#300" stroke="#f00" stroke-width="4"/>
+  
+  <!-- 4. The Timer: Digital Readout Integration -->
+  <!-- Timer Body (Integrated into the head) -->
+  <rect x="216" y="132" width="80" height="48" rx="10" fill="#000" stroke="#f00" stroke-width="3"/>
+  <!-- Digital Segment Display (Simple) -->
+  <rect x="236" y="152" width="40" height="16" rx="3" fill="#300"/>
+  <circle cx="246" cy="160" r="3" fill="#0a0"/>
+  <circle cx="256" cy="160" r="3" fill="#f00"/>
+  <circle cx="266" cy="160" r="3" fill="#f00"/>
+</svg>
