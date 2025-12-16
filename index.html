@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Darkroom Timer</title>
+	<!-- PWA Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Darkroom Timer">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+
+<!-- Icons for various platforms -->
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180x180.png">
+<link rel="mask-icon" href="icon.svg" color="#f00">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="manifest.json">
     <style>
     /* ===== CSS VARIABLES - PRECISE MATCH TO ORIGINAL ===== */
     :root {
@@ -7638,6 +7653,58 @@ async toggle() {
         // Initial chart update
         updateChart();
     });
+		// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js')
+      .then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+  });
+}
+
+// Handle online/offline status
+window.addEventListener('online', function() {
+  console.log('Application is online');
+  // You could show a "back online" message
+});
+
+window.addEventListener('offline', function() {
+  console.log('Application is offline');
+  // The service worker will handle offline functionality
+});
+
+// Before install prompt handling
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  e.preventDefault();
+  // Stash the event so it can be triggered later
+  deferredPrompt = e;
+  
+  // Optional: Show your own install button
+  // showInstallButton();
+  
+  console.log('PWA install prompt available');
+});
+
+// Optional: Function to trigger install
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
 </script>
 </body>
 </html>
